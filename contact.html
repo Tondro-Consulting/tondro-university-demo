@@ -24,4 +24,30 @@
 <section id="reply-times"><h2>How fast we reply</h2>
 <p>Email replies within two business days. Phones are staffed during office hours; after-hours calls go to voicemail returned the next business day. Admission decisions are never given by phone or chat — check your applicant portal.</p></section>
 </main><footer>Tondro University &middot; 1 University Way, Harbor Falls &middot; admissions@tondro.edu &middot; (555) 555-0142</footer>
+<!-- Thunder chat widget (Agentforce, TONDRO-PDE) -->
+<!--
+  Thunder embedded messaging snippet — TONDRO-PDE.
+  Deployment: THU_agentMessagingChannel (EmbeddedServiceDeployment 04Ihk0000001zkb, published)
+  Site: ESW_THU_agentMessagingChan_1793110995851 (Live)
+  Paste into the host page on https://tondro-consulting.github.io (already allowlisted on the deployment).
+  DO NOT host on any other domain without adding it to the deployment's allowed domains.
+-->
+<script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'en_US';
+			embeddedservice_bootstrap.init(
+				'00Dhk000002jQQD',
+				'THU_agentMessagingChannel',
+				'https://tondroagentforce-dev-ed.develop.my.site.com/ESWTHUagentMess1793110995851',
+				{
+					scrt2URL: 'https://tondroagentforce-dev-ed.develop.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://tondroagentforce-dev-ed.develop.my.site.com/ESWTHUagentMess1793110995851/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 </body></html>
