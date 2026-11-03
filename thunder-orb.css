@@ -1,0 +1,61 @@
+/* Thunder chat launcher — a fluid "live orb" that replaces Salesforce's default chat button.
+   Salesforce draws its own button inside the chat iframe, where page CSS can't reach,
+   so thunder-orb.js hides that button and opens the chat from this one instead.
+   The body is a morphing blob; two droplets orbit and melt in and out of it through the
+   SVG "goo" filter defined in thunder-orb.js (blur, then sharpen the alpha edge). */
+.thunder-orb{position:fixed;right:28px;bottom:28px;z-index:2147482000;width:80px;height:80px;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  filter:drop-shadow(0 10px 18px rgba(11,28,51,.35)) drop-shadow(0 0 18px rgba(79,163,255,.6));
+  animation:thunder-orb-in .6s cubic-bezier(.2,.9,.3,1.3) both}
+.thunder-orb[hidden]{display:none}
+.thunder-orb:focus-visible{outline:3px solid var(--gold-bright,#e3bf3e);outline-offset:8px;border-radius:50%}
+.thunder-orb-defs{position:absolute;width:0;height:0}
+
+/* Soft aura that breathes behind the liquid */
+.thunder-orb-aura{position:absolute;inset:-10px;border-radius:50%;background:radial-gradient(circle,rgba(79,163,255,.45),rgba(227,191,62,.18) 55%,transparent 72%);filter:blur(8px);animation:thunder-orb-aura 4.5s ease-in-out infinite}
+
+/* Everything inside the goo layer merges like liquid */
+.thunder-orb-goo{position:absolute;inset:-18px;filter:url(#thunder-orb-goo)}
+.thunder-orb-core,.thunder-orb-drop{position:absolute;background:radial-gradient(circle at 34% 30%,#d9efff 0,#7cc0ff 16%,#2f7fd6 40%,#1a4a7d 68%,#0b1c33 100%)}
+.thunder-orb-core{inset:18px;overflow:hidden;isolation:isolate;border-radius:58% 42% 55% 45%/48% 60% 40% 52%;animation:thunder-orb-morph 9s ease-in-out infinite alternate}
+.thunder-orb-drop{left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%}
+.thunder-orb-drop.d1{animation:thunder-orb-orbit 6.5s ease-in-out infinite}
+.thunder-orb-drop.d2{width:16px;height:16px;margin:-8px 0 0 -8px;animation:thunder-orb-orbit 8.5s ease-in-out infinite reverse;animation-delay:-3s}
+
+/* Currents of light swirling inside the blob */
+.thunder-orb-core::before,.thunder-orb-core::after{content:"";position:absolute;inset:-40%;mix-blend-mode:screen;filter:blur(7px)}
+.thunder-orb-core::before{background:conic-gradient(from 0deg,transparent 0 12%,rgba(227,191,62,.85) 22%,transparent 38%,rgba(110,200,255,.75) 60%,transparent 78%);animation:thunder-orb-spin 7s linear infinite}
+.thunder-orb-core::after{background:conic-gradient(from 180deg,transparent 0 20%,rgba(160,120,255,.55) 34%,transparent 50%,rgba(80,230,255,.6) 74%,transparent 90%);animation:thunder-orb-spin 11s linear infinite reverse}
+
+/* Glassy highlight that drifts over the surface */
+.thunder-orb-shine{position:absolute;z-index:2;left:20%;top:16%;width:38%;height:26%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,255,255,.8),rgba(255,255,255,0) 70%);transform:rotate(-24deg);pointer-events:none;animation:thunder-orb-shine 9s ease-in-out infinite alternate}
+
+/* "Ask Thunder" label, shown on hover, keyboard focus and once on arrival */
+.thunder-orb-label{position:absolute;right:calc(100% + 16px);top:50%;transform:translate(8px,-50%);white-space:nowrap;padding:.5rem .85rem;border-radius:999px;background:var(--navy,#12294b);color:#fff;font:600 .88rem/1 var(--sans,system-ui,sans-serif);letter-spacing:.01em;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+.thunder-orb-label::after{content:"";position:absolute;right:-5px;top:50%;width:10px;height:10px;background:inherit;transform:translateY(-50%) rotate(45deg)}
+.thunder-orb:hover .thunder-orb-label,.thunder-orb:focus-visible .thunder-orb-label,.thunder-orb.is-greeting .thunder-orb-label{opacity:1;transform:translate(0,-50%)}
+
+/* Livelier when you reach for it */
+.thunder-orb:hover .thunder-orb-core{animation-duration:3s}
+.thunder-orb:hover .thunder-orb-drop.d1{animation-duration:2.6s}
+.thunder-orb:hover .thunder-orb-drop.d2{animation-duration:3.4s}
+.thunder-orb:active .thunder-orb-goo{transform:scale(.92);transition:transform .1s}
+
+@keyframes thunder-orb-morph{
+  0%{border-radius:58% 42% 55% 45%/48% 60% 40% 52%;transform:rotate(0) scale(1)}
+  25%{border-radius:42% 58% 38% 62%/60% 44% 56% 40%;transform:rotate(45deg) scale(1.05,.97)}
+  50%{border-radius:63% 37% 52% 48%/38% 57% 43% 62%;transform:rotate(100deg) scale(.97,1.04)}
+  75%{border-radius:38% 62% 60% 40%/55% 35% 65% 45%;transform:rotate(160deg) scale(1.04)}
+  100%{border-radius:50% 50% 42% 58%/62% 46% 54% 38%;transform:rotate(220deg) scale(.99,1.03)}}
+@keyframes thunder-orb-orbit{
+  0%{transform:rotate(0) translateX(10px) scale(.7)}
+  30%{transform:rotate(110deg) translateX(36px) scale(1)}
+  55%{transform:rotate(200deg) translateX(24px) scale(.85)}
+  80%{transform:rotate(290deg) translateX(38px) scale(.95)}
+  100%{transform:rotate(360deg) translateX(10px) scale(.7)}}
+@keyframes thunder-orb-spin{to{transform:rotate(360deg)}}
+@keyframes thunder-orb-shine{0%{transform:translate(0,0) rotate(-24deg)}100%{transform:translate(12%,8%) rotate(-10deg) scale(.9)}}
+@keyframes thunder-orb-aura{0%,100%{transform:scale(.92);opacity:.75}50%{transform:scale(1.12);opacity:1}}
+@keyframes thunder-orb-in{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+
+@media (max-width:40rem){.thunder-orb{right:20px;bottom:20px;width:62px;height:62px}}
+@media (prefers-reduced-motion:reduce){.thunder-orb,.thunder-orb *,.thunder-orb-core::before,.thunder-orb-core::after{animation:none!important}.thunder-orb-drop{display:none}}

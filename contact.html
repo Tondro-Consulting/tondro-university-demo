@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b1c33">
-<title>Contact & Offices | Tondro University</title><link rel="stylesheet" href="style.css"></head>
+<title>Contact & Offices | Tondro University</title><link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="thunder-orb.css"></head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 <div class="utility-bar"><div class="utility-inner">
@@ -101,6 +102,7 @@
 <div class="footer-bottom"><p>Tondro University is a fictional institution created for demonstration. &middot; 1 University Way, Harbor Falls &middot; admissions@tondro.edu &middot; (555) 555-0142</p></div>
 </footer>
 <!-- Thunder chat widget (Agentforce, TONDRO-PDE) -->
+<script src="thunder-orb.js"></script>
 <!--
   Thunder embedded messaging snippet — TONDRO-PDE.
   Deployment: THU_agentMessagingChannel (EmbeddedServiceDeployment 04Ihk0000001zkb, published)
@@ -112,6 +114,7 @@
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US';
+			embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
 			embeddedservice_bootstrap.init(
 				'00Dhk000002jQQD',
 				'THU_agentMessagingChannel',
